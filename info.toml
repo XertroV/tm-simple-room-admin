@@ -2,7 +2,7 @@
 name     = "Simple Room Admin"
 author   = "XertroV"
 category = "Club"
-version  = "0.9.0"
+version  = "1.0.0"
 
 [script]
 #__DEFINES__
