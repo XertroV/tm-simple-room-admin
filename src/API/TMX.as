@@ -89,9 +89,13 @@ namespace TMX {
                 auto mapId = randomIds[i];
                 auto map = GetMapWithId(maps, mapId);
                 if (map is null) continue;
+                // only race
                 if (!string(map["MapType"]).Contains("TM_Race")) continue;
-                if (!string(map["VehicleName"]).Contains("Character")) continue;
+                // no character pilot
+                if (string(map["VehicleName"]).Contains("Character")) continue;
+                // uploaded to nadeo
                 if (map["OnlineMapId"].GetType() == Json::Type::Null) continue;
+                // not too large
                 if (bool(map["ServerSizeExceeded"])) continue;
                 // todo: add other filters, possibly to request depending on them
                 trace("Found random map @ " + i + ": " + int(map["MapId"]));

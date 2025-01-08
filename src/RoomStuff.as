@@ -95,7 +95,12 @@ void InsertMapToRoomNext(BRM::IRoomSettingsBuilder@ room, const string &in uid, 
         if (uidIx != -1) {
             roomMapIds.RemoveAt(uidIx);
         }
-        roomMapIds.InsertAt(foundIx + 1, uid);
+        if (roomMapIds.Length == 1 || foundIx == int(roomMapIds.Length) - 1) {
+            // if we only have 1 map, or it's at the end of the list, setting it to the last map will bug and the server will load the first map again.
+            roomMapIds.InsertAt(0, uid);
+        } else {
+            roomMapIds.InsertAt(foundIx + 1, uid);
+        }
     }
     room.SetMaps(roomMapIds);
 }

@@ -467,10 +467,16 @@ namespace GUI {
             startnew(SetTimeRemaining_Async, 600);
         }
 
-        if (UI::IsKeyDown(UI::Key::LeftAlt)) {
-            if (ButtonSL("10 s##end-in")) {
-                startnew(SetTimeRemaining_Async, 10);
-            }
+        bool altDown = UI::IsKeyDown(UI::Key::LeftAlt);
+        UI::BeginDisabled(!altDown);
+        if (ButtonSL("10 s##end-in")) {
+            startnew(SetTimeRemaining_Async, 10);
+        }
+        UI::EndDisabled();
+        if (!altDown) {
+            UI::TextDisabled(Icons::QuestionCircle);
+            AddSimpleTooltip("Hold Alt to enable.");
+            UI::SameLine();
         }
 
         UI::Dummy(vec2());
