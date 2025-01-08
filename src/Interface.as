@@ -470,14 +470,18 @@ namespace GUI {
         if (ButtonSL("10 s##end-in")) {
             startnew(SetTimeRemaining_Async, 10);
         }
+        if (ButtonSL("1 s##end-in")) {
+            startnew(SetTimeRemaining_Async, 1);
+        }
         UI::EndDisabled();
         if (!altDown) {
+            UI::SetCursorPos(UI::GetCursorPos() - vec2(4, 0));
             UI::TextDisabled(Icons::QuestionCircle);
             AddSimpleTooltip("Hold Alt to enable.");
-            UI::SameLine();
+        } else {
+            UI::Dummy(vec2());
         }
 
-        UI::Dummy(vec2());
     }
 
 
