@@ -4,7 +4,7 @@ namespace GUI {
 
     // input vars
     [Setting hidden]
-    int m_moveOnInSec = 120;
+    int m_moveOnInSec = 2;
     [Setting hidden]
     int m_defaultTimeLimit = 600;
     [Setting hidden]
@@ -32,9 +32,7 @@ namespace GUI {
         if (UI::Begin(PluginName, windowOpen, UI::WindowFlags::NoCollapse | UI::WindowFlags::AlwaysAutoResize)) {
             // UI::SeparatorText("Simple Room Admin");
             PushWindowStyles();
-            UI::BeginDisabled(IsLoading);
             RenderTabs();
-            UI::EndDisabled();
 
             if (IsLoading) {
                 UI::SeparatorText("Loading");
@@ -57,22 +55,22 @@ namespace GUI {
     void RenderTabs() {
         UI::BeginTabBar("sra-tabs");
 
-        if (UI::BeginTabItem("Next Map")) {
-            RenderNextMap();
-            UI::EndTabItem();
-        }
-
-        if (UI::BeginTabItem("Current Map")) {
-            RenderCurrRound();
-            UI::EndTabItem();
-        }
-
-        if (UI::BeginTabItem("Maps")) {
-            RenderAddMap();
-            UI::EndTabItem();
-        }
+        _TabItem("Next Map", RenderNextMap);
+        _TabItem("Current Map", RenderCurrRound);
+        _TabItem("Maps", RenderAddMap);
 
         UI::EndTabBar();
+    }
+
+    bool _TabItem(const string &in name, CoroutineFunc@ render, int flags = UI::TabItemFlags::NoCloseWithMiddleMouseButton) {
+        if (UI::BeginTabItem(name, flags)) {
+            UI::BeginDisabled(IsLoading);
+            render();
+            UI::EndDisabled();
+            UI::EndTabItem();
+            return true;
+        }
+        return false;
     }
 
     void Render_NotInServerRoom() {
