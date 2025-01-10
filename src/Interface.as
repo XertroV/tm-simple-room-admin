@@ -28,10 +28,9 @@ namespace GUI {
 
     void Render() {
         if (!windowOpen) return;
-        PushWindowStyles();
         if (UI::Begin(PluginName, windowOpen, UI::WindowFlags::NoCollapse | UI::WindowFlags::AlwaysAutoResize)) {
             // UI::SeparatorText("Simple Room Admin");
-            PushWindowStyles();
+            PushInnerWindowStyles();
             RenderTabs();
 
             if (IsLoading) {
@@ -46,10 +45,9 @@ namespace GUI {
                 UI::TextWrapped("\\$i\\$fa6" + _failureMsg);
             }
 
-            PopWindowStyles();
+            PopInnerWindowStyles();
         }
         UI::End();
-        PopWindowStyles();
     }
 
     void RenderTabs() {
@@ -599,12 +597,12 @@ namespace GUI {
     }
 
 
-    // applies to whole window
-    void PushWindowStyles() {
+    // applies to inner window
+    void PushInnerWindowStyles() {
         UI::PushItemWidth(140);
     }
 
-    void PopWindowStyles() {
+    void PopInnerWindowStyles() {
         UI::PopItemWidth();
     }
 
